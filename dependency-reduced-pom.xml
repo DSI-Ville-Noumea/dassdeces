@@ -220,7 +220,7 @@
   </distributionManagement>
   <properties>
     <version>${project.version}</version>
-    <svnurl>https://svn.ville-noumea.nc/sed/DASSDeces</svnurl>
+    <svnurl>https://svn.ville-noumea.nc/sed/dassdeces</svnurl>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <artifactId>${project.artifactId}</artifactId>
   </properties>
