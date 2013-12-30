@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  title="Frequently Asked Questions"
+  toplink="false">
+
+  <part id="general">
+    <title>General</title>
+
+   
+  </part>
+  
+  <part id="donnees">
+    <title>Données</title>
+
+    
+  </part>
+  <part id="erreurs">
+
+    <title>Erreurs</title>
+
+    <faq id="erreur3">
+      <question>
+        L'utilisateur nous informe qu'il a un message d'erreur au niveau de l'application, que faire ?
+      </question>
+      <answer>
+		<p>1 - Demander à l'utilisateur son login.</p>
+        <p>2 - Aller regarder dans les logs le soucis rencontré afin de le corriger.</p>
+      </answer>
+    </faq>
+
+    <faq id="erreur4">
+      <question>
+        Où aller voir les logs du serveur d'applications ?
+      </question>
+      <answer>
+      	<p>Prod : \\netmea\etatcivil\dassdeces</p>
+		<p> Recette : \\robinnw\etatcivil\dassdeces</p>
+      </answer>
+    </faq>
+
+  </part>
+
+</faqs>
