@@ -24,6 +24,9 @@
 		</developer>
 	</developers>
 
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
 	<dependencies>
 		<dependency>
 			<groupId>javax.mail</groupId>
