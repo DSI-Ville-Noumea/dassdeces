@@ -4,7 +4,7 @@
   <groupId>nc.mairie</groupId>
   <artifactId>DASSDeces</artifactId>
   <name>DASSDeces</name>
-  <version>2.1</version>
+  <version>2.2</version>
   <description>Transmissions des données de mortalité à la DASS</description>
   <prerequisites>
     <maven>3.0</maven>
@@ -32,27 +32,8 @@
     <url>http://www.ville-noumea.nc</url>
   </organization>
   <build>
+    <finalName>${project.artifactId}##${project.version}</finalName>
     <plugins>
-      <plugin>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>2.5</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.7</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-install-plugin</artifactId>
-        <version>2.4</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.15</version>
-      </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.2</version>
@@ -89,8 +70,6 @@
             <configuration>
               <tasks>
                 <copy />
-                <copy />
-                <delete />
                 <checksum>
                   <fileset>
                     <include />
@@ -162,6 +141,17 @@
               <version>2.4.0</version>
             </plugin>
           </reportPlugins>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>nc.mairie.etatcivil.DASSDeces</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
       <plugin>
@@ -255,7 +245,7 @@
   </distributionManagement>
   <properties>
     <version>${project.version}</version>
-    <java.version>1.5</java.version>
+    <java.version>1.7</java.version>
     <svnurl>https://svn.ville-noumea.nc/sed/dassdeces</svnurl>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <artifactId>${project.artifactId}</artifactId>

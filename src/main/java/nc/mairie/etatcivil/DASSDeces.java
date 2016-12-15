@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -19,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.StringTokenizer;
+
+import javax.mail.event.FolderEvent;
 
 
 
@@ -33,31 +34,26 @@ public class DASSDeces {
 	private File fileECC;
 	private File fileECP;
 	private File logFile;
+	private File folderExtraction;
 	private String debutFilenameECC = "ECC_NOUMEA_";
 	private String debutFilenameECP = "ECP_NOUMEA_";
-	private static String serveurJDBC = "localhost";
-	private static String hostname = "localhost";
 	private String root=null;
 	private String SMTPServer = null;
 	
 	private Properties properties = new Properties();
 
-	public void init(String args []) {
-		//On cherche le hostname
-		try {
-			hostname =  InetAddress.getLocalHost().getHostName();
-		} catch (Exception e) {
-			hostname = "localhost";
-		}
-
-		//Si pas le serveur
-		serveurJDBC = args.length == 1 ? args[0] : "LOCALHOST";
+	public void init() {
 		
 		//recup du root
 		root = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
 		if (root.toUpperCase().endsWith("JAR") || root.toUpperCase().endsWith("CLASS") ) {
 			root=root.substring(0, root.lastIndexOf('/') +1);
 		}
+		
+		//creation du dossier extraction s'il n'existe pas
+		folderExtraction = new File (root+"Extraction/");
+		if (! folderExtraction.exists())
+			folderExtraction.mkdirs();
 		
 		//init du logFile
 		logFile = new File(root+getNomClass()+".log");
@@ -122,9 +118,9 @@ public class DASSDeces {
 		//Formatage du nom du fichier
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 		String nomfich=debutFilenameECC+sdf.format(new Date())+".txt";
-		fileECC = new File(root+"Extraction/"+nomfich);
+		fileECC = new File(folderExtraction.getAbsoluteFile()+"\\"+nomfich);
 
-		creerFile(fileECC, con, "select * from mairie.DASSDecesECC");
+		creerFile(fileECC, con, properties.getProperty("QUERY_COMMUN"));
 
 		afficheMessage("Fin de reation du fichier "+fileECC.getName());
 		
@@ -134,9 +130,9 @@ public class DASSDeces {
 		//Formatage du nom du fichier
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 		String nomfich=debutFilenameECP+sdf.format(new Date())+".txt";
-		fileECP = new File(root+"Extraction/"+nomfich);
+		fileECP = new File(folderExtraction.getAbsoluteFile()+"\\"+nomfich);
 
-		creerFile(fileECP, con, "select * from mairie.DASSDecesECP");
+		creerFile(fileECP, con, properties.getProperty("QUERY_COUTUMIER"));
 
 		afficheMessage("Fin de creation du fichier "+fileECP.getName());
 	}
@@ -208,34 +204,37 @@ public class DASSDeces {
 	
 	public void fermerConnection(Connection con){
 		try {
-			con.rollback();
-		} catch (Exception e) {
-			afficheMessage("Impossible de faire rollback sur la connexion");
-		}
-		try {
-			con.close();
+			if (con != null) {
+				con.close();
+			}
 		} catch (Exception e) {
 			afficheMessage("Impossible de fermer la connexion");
 		}
 			
 	}
 	
-	public void run(String[] args) {
+	public void run() {
 
 		//init des données
-		init(args);
+		init();
+		Connection con = null;
+		try {
 
-		//Recup d'une connexion
-		Connection con = getUneConnexionJDBC(serveurJDBC);
-		
-		//Creation du fichier de droit commun
-		creerFileECC(con);
-		
-		//Creation du fichier de droit particulier
-		creerFileECP(con);
-		
-		//fermeture de la connexion
-		fermerConnection(con);
+			//Recup d'une connexion
+			con= getUneConnexionJDBC();
+			
+			//Creation du fichier de droit commun
+			creerFileECC(con);
+			
+			//Creation du fichier de droit particulier
+			creerFileECP(con);
+		} catch (Exception e) {
+			afficheMessage(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			//fermeture de la connexion
+			fermerConnection(con);
+		}
 		
 		//Envoi du mail
 		envoyerMail();
@@ -247,33 +246,26 @@ public class DASSDeces {
 		DASSDeces aDDASSDeces = new DASSDeces();
 		
 		//c'est parti
-		aDDASSDeces.run(args);
+		aDDASSDeces.run();
 		
 	}
 	
 	
-	public  java.sql.Connection getUneConnexionJDBC(String aServeur) {
-		return getUneConnexionJDBC(aServeur, "***REMOVED***","***REMOVED***");
-	}
-	
-	public java.sql.Connection getUneConnexionJDBC(String aServeur, String nom, String password) {
-		if (hostname.toUpperCase().indexOf("NOUMEA") != -1 ) {
-			return getUneConnexionJDBCNatif(aServeur, nom, password);
-		} else
-			return getUneConnexionJDBCToolBox(aServeur, nom, password);
-	}
-	
-	private java.sql.Connection getUneConnexionJDBCNatif(String aServeur, String nom, String password) {
-		afficheMessage("Connexion de "+nom+" avec le JDBC Natif");
-	//	String drv="com.ibm.as400.access.AS400JDBCDriver";
-		String drv="com.ibm.db2.jdbc.app.DB2Driver";
+	public  java.sql.Connection getUneConnexionJDBC() {
+		
+		String SGBD_DRIVER =  properties.getProperty("SGBD_DRIVER");
+		String SGBD_URL =  properties.getProperty("SGBD_URL");
+		String SGBD_USER=  properties.getProperty("SGBD_USER");
+		String SGBD_PWD=  properties.getProperty("SGBD_PWD");
+		
+		afficheMessage("Connexion de "+SGBD_USER);
 		
 		java.sql.Connection con = null;
 		try {
 			
-			Class.forName(drv);
+			Class.forName(SGBD_DRIVER);
 			//con   = java.sql.DriverManager.getConnection("jdbc:as400://"+aServeur,nom,password);
-			con   = java.sql.DriverManager.getConnection("jdbc:db2://"+aServeur,nom,password);
+			con   = java.sql.DriverManager.getConnection(SGBD_URL,SGBD_USER,SGBD_PWD);
 			con.setAutoCommit(true);
 		} catch(Exception ex) {
 			System.out.println("erreur driver : " + ex);
@@ -281,20 +273,7 @@ public class DASSDeces {
 		}
 		return con;
 	}
-	private java.sql.Connection getUneConnexionJDBCToolBox(String aServeur, String nom, String password) {
-		afficheMessage("Connexion de "+nom+" avec le JDBC ToolBox");
-		String drv="com.ibm.as400.access.AS400JDBCDriver";
-		java.sql.Connection con = null;
-		try {
-			Class.forName(drv);
-			con   = java.sql.DriverManager.getConnection("jdbc:as400://"+aServeur,nom,password);
-			con.setAutoCommit(false);
-		} catch(Exception ex) {
-			System.out.println("erreur driver : " + ex);
-			return null;
-		}
-		return con;
-	}
+	
 	
 	/**
 	 * Log d'un message
@@ -315,7 +294,7 @@ public class DASSDeces {
 	/**
 	 * Insérez la description de la méthode ici.
 	 *  Date de création : (07/09/2006 13:29:54)
-	 * @return java.util.Hashtable
+	 * @param message message
 	 */
 	public void afficheErreur(String message) {
 		String msg = new Date(System.currentTimeMillis())+" "+getNomClass()+" : "+message;
@@ -327,7 +306,7 @@ public class DASSDeces {
 	/**
 	 * Insérez la description de la méthode ici.
 	 *  Date de création : (07/09/2006 13:29:54)
-	 * @return java.util.Hashtable
+	 * @param message message
 	 */
 	public void afficheMessage(String message) {
 		String msg= new Date(System.currentTimeMillis())+" "+getNomClass()+" : "+message;

@@ -44,6 +44,10 @@ public class Mail {
 	Multipart multipart = new MimeMultipart();
 	
 	/**
+	 * @param server server 
+	 * @param from from 
+	 * @param theSujet theSujet 
+	 * @throws Exception Exception 
 	 * 
 	 */
 	public Mail(String server, String from, String theSujet) throws Exception{
