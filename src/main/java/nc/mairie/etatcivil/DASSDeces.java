@@ -118,7 +118,7 @@ public class DASSDeces {
 		//Formatage du nom du fichier
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 		String nomfich=debutFilenameECC+sdf.format(new Date())+".txt";
-		fileECC = new File(folderExtraction.getAbsoluteFile()+"\\"+nomfich);
+		fileECC = new File(folderExtraction.getAbsoluteFile()+"/"+nomfich);
 
 		creerFile(fileECC, con, properties.getProperty("QUERY_COMMUN"));
 
@@ -130,7 +130,7 @@ public class DASSDeces {
 		//Formatage du nom du fichier
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 		String nomfich=debutFilenameECP+sdf.format(new Date())+".txt";
-		fileECP = new File(folderExtraction.getAbsoluteFile()+"\\"+nomfich);
+		fileECP = new File(folderExtraction.getAbsoluteFile()+"/"+nomfich);
 
 		creerFile(fileECP, con, properties.getProperty("QUERY_COUTUMIER"));
 
