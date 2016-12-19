@@ -41,9 +41,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:${svnurl}/trunk</connection>
-		<developerConnection>scm:svn:${svnurl}/trunk</developerConnection>
-		<url>${svnurl}/trunk</url>
+        <connection>scm:git:git://${giturl}.git</connection>
+        <developerConnection>scm:git:git@github.com:DSI-Ville-Noumea/${project.name}.git</developerConnection>
+        <url>https://${giturl}</url>
 	</scm>
 
 	<distributionManagement>
@@ -227,9 +227,9 @@
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>
-					<webAccessUrl>${svnurl}/trunk</webAccessUrl>
-					<anonymousConnection>scm:svn:${svnurl}/trunk</anonymousConnection>
-					<developerConnection>scm:svn:${svnurl}</developerConnection>
+					<webAccessUrl>https://${giturl}</webAccessUrl>
+					<anonymousConnection>scm:git:git:https://${giturl}.git</anonymousConnection>
+					<developerConnection>scm:git:git:https://${giturl}.git</developerConnection>
 				</configuration>
 				<reportSets>
 					<reportSet>
@@ -276,8 +276,8 @@
 		<artifactId>${project.artifactId}</artifactId>
 		<version>${project.version}</version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<svnurl>https://svn.ville-noumea.nc/sed/dassdeces</svnurl>
-		<!--  Bien laisser à java 1.5 car l'AS400 est en 1.5 !!! -->
+		<giturl>github.com/DSI-Ville-Noumea/${project.name}</giturl>
+		<!--  Bien laisser à java 1.7 car le tomcat de Cityweb est en 1.7 !!! -->
 		<java.version>1.7</java.version>
 	</properties>
 
