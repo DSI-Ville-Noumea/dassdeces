@@ -4,7 +4,7 @@
   <groupId>nc.mairie</groupId>
   <artifactId>DASSDeces</artifactId>
   <name>DASSDeces</name>
-  <version>2.2</version>
+  <version>2.3-SNAPSHOT</version>
   <description>Transmissions des données de mortalité à la DASS</description>
   <prerequisites>
     <maven>3.0</maven>
@@ -36,7 +36,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.2</version>
+        <version>2.4.3</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -60,7 +60,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
+        <version>1.8</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -83,7 +83,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.6</version>
         <configuration>
           <reportPlugins>
             <plugin>
@@ -156,7 +156,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.6.0</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -164,7 +164,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
+        <version>3.0.2</version>
         <configuration>
           <nonFilteredFileExtensions>
             <nonFilteredFileExtension>ico</nonFilteredFileExtension>
@@ -175,12 +175,12 @@
       </plugin>
       <plugin>
         <artifactId>maven-scm-plugin</artifactId>
-        <version>1.8.1</version>
+        <version>1.9.5</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
-        <version>2.1</version>
+        <version>2.3</version>
         <configuration>
           <rulesUri>file:rules.xml</rulesUri>
         </configuration>
@@ -191,7 +191,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.7</version>
+        <version>2.9</version>
         <configuration>
           <webAccessUrl>${svnurl}/trunk</webAccessUrl>
           <anonymousConnection>scm:svn:${svnurl}/trunk</anonymousConnection>
