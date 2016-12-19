@@ -59,6 +59,15 @@
 		<finalName>${project.artifactId}##${project.version}</finalName>
 		<plugins>
 			<plugin>
+		        <groupId>com.versioneye</groupId>
+		        <artifactId>versioneye-maven-plugin</artifactId>
+		        <version>${versioneye-maven-plugin.version}</version>
+		        <configuration>
+		            <apiKey>${versioneye-maven-plugin.apiKey}</apiKey>
+		        	<projectId>${versioneye-maven-plugin.projectId}</projectId>
+		    	</configuration>
+		    </plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.4.3</version>
@@ -273,6 +282,9 @@
 	</reporting>
 
 	<properties>
+		<versioneye-maven-plugin.version>3.11.0</versioneye-maven-plugin.version>
+   		<versioneye-maven-plugin.apiKey>${env.VERSIONEYE_APIKEY}</versioneye-maven-plugin.apiKey>
+  		<versioneye-maven-plugin.projectId>${env.VERSIONEYE_PROJECTID}</versioneye-maven-plugin.projectId>
 		<artifactId>${project.artifactId}</artifactId>
 		<version>${project.version}</version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
