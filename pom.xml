@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nc.mairie</groupId>
 	<artifactId>DASSDeces</artifactId>
-	<version>2.3</version>
+	<version>2.4-SNAPSHOT</version>
 	<description>Transmissions des données de mortalité à la DASS</description>
 	<name>DASSDeces</name>
 	<organization>
@@ -36,7 +36,7 @@
 		<dependency>
 		    <groupId>org.postgresql</groupId>
 		    <artifactId>postgresql</artifactId>
-		    <version>9.4.1212.jre7</version>
+		    <version>9.4.1212</version>
 		</dependency>
 	</dependencies>
 
@@ -195,7 +195,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -282,15 +282,16 @@
 	</reporting>
 
 	<properties>
-		<versioneye-maven-plugin.version>3.11.0</versioneye-maven-plugin.version>
+		<versioneye-maven-plugin.version>3.11.1</versioneye-maven-plugin.version>
    		<versioneye-maven-plugin.apiKey>${env.VERSIONEYE_APIKEY}</versioneye-maven-plugin.apiKey>
   		<versioneye-maven-plugin.projectId>${env.VERSIONEYE_PROJECTID}</versioneye-maven-plugin.projectId>
+  		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
 		<artifactId>${project.artifactId}</artifactId>
 		<version>${project.version}</version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<giturl>github.com/DSI-Ville-Noumea/${project.name}</giturl>
 		<!--  Bien laisser à java 1.7 car le tomcat de Cityweb est en 1.7 !!! -->
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 
 </project>
