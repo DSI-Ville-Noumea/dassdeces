@@ -24,7 +24,7 @@
 		</developer>
 	</developers>
 	<properties>
-		<versioneye-maven-plugin.version>3.11.1</versioneye-maven-plugin.version>
+		<versioneye-maven-plugin.version>3.11.2</versioneye-maven-plugin.version>
    		<versioneye-maven-plugin.apiKey>${env.VERSIONEYE_APIKEY}</versioneye-maven-plugin.apiKey>
   		<versioneye-maven-plugin.projectId>${env.VERSIONEYE_PROJECTID}</versioneye-maven-plugin.projectId>
   		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
