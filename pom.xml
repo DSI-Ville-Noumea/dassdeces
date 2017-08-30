@@ -114,6 +114,7 @@
 				<executions>
 					<execution>
 						<phase>package</phase>
+						<!--On supprime la copie dans le site maven 
 						<configuration>
 							<tasks>
 								<copy file="${project.build.directory}/${project.build.finalName}.${project.packaging}" tofile="src/site/resources/${project.packaging}/${project.version}/ROOT##${project.artifactId}-${project.version}.${project.packaging}"/>
@@ -124,7 +125,7 @@
 									</fileset>
 								</checksum>
 							</tasks>
-						</configuration>
+						</configuration> -->
 						<goals>
 							<goal>run</goal>
 						</goals>
