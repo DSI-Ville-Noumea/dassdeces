@@ -24,18 +24,18 @@
 		</developer>
 	</developers>
 	<properties>
-		<versioneye-maven-plugin.version>3.11.2</versioneye-maven-plugin.version>
+		<versioneye-maven-plugin.version>3.11.4</versioneye-maven-plugin.version>
    		<versioneye-maven-plugin.apiKey>${env.VERSIONEYE_APIKEY}</versioneye-maven-plugin.apiKey>
   		<versioneye-maven-plugin.projectId>${env.VERSIONEYE_PROJECTID}</versioneye-maven-plugin.projectId>
-  		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+  		<maven-compiler-plugin.version>3.6.2</maven-compiler-plugin.version>
 		<artifactId>${project.artifactId}</artifactId>
 		<version>${project.version}</version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<giturl>github.com/DSI-Ville-Noumea/${project.name}</giturl>
 		<!--  Bien laisser à java 1.7 car le tomcat de Cityweb est en 1.7 !!! -->
 		<java.version>1.8</java.version>
-		<postgresql.version>42.0.0</postgresql.version>
-		<maven-shade-plugin.version>3.0.0</maven-shade-plugin.version>
+		<postgresql.version>42.1.4</postgresql.version>
+		<maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
 	</properties>
 
 	<prerequisites>
@@ -236,7 +236,7 @@
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>versions-maven-plugin</artifactId>
-		        <version>2.3</version>
+		        <version>2.4</version>
 		        <configuration>
 				  <rulesUri>file:rules.xml</rulesUri>
 		        </configuration>
