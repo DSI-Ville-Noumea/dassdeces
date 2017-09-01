@@ -14,9 +14,9 @@ install:
 script:
 - mvn versioneye:update 
 before_deploy:
-- export RELEASE_PKG_FILE=$(ls target/*.jar)
-- export RELEASE_PKG_MD5_FILE=$(ls target/*.jar.md5)
-- export RELEASE_PKG_SHA_FILE=$(ls target/*.jar.sha1)
+- export RELEASE_PKG_FILE=$(ls target/ROOT*.jar)
+- export RELEASE_PKG_MD5_FILE=$(ls target/ROOT*.jar.md5)
+- export RELEASE_PKG_SHA_FILE=$(ls target/ROOT*.jar.sha1)
 - echo "deploying $RELEASE_PKG_FILE , $RELEASE_PKG_MD5_FILE , $RELEASE_PKG_SHA_FILE
   to GitHub releases"
 deploy:

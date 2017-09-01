@@ -72,7 +72,7 @@
 
 
 	<build>
-		<finalName>${project.artifactId}##${project.version}</finalName>
+		<finalName>ROOT##${project.artifactId}-${project.version}</finalName>
 		<plugins>
 			<plugin>
 		        <groupId>com.versioneye</groupId>
@@ -264,7 +264,7 @@
                         <fileSet>
                             <directory>target</directory>
                             <includes>
-                                <include>${project.artifactId}##${project.version}.jar</include>
+                                <include>ROOT##${project.artifactId}-${project.version}.${project.packaging}</include>
                             </includes>
                         </fileSet>
                     </fileSets>
