@@ -12,11 +12,7 @@ import java.util.StringTokenizer;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -29,6 +25,7 @@ import javax.mail.internet.MimeMultipart;
  * Window - Preferences - Java - Code Style - Code Templates
  */
 public class Mail {
+
 	public static void main(String [] args) {
 		try {
 			test(args);
@@ -37,34 +34,41 @@ public class Mail {
 		}
 		
 	}
-	//public static String SMTPserveur = "ePoste.site-mairie.noumea.nc";
+
 	public static String SMTPserveur = "smtp.site-mairie.noumea.nc";
 		
 	private MimeMessage message;
-	Multipart multipart = new MimeMultipart();
+	private Multipart multipart = new MimeMultipart();
 	
 	/**
 	 * @param server server 
-	 * @param from from 
+	 * @param replyTo replyTo
 	 * @param theSujet theSujet 
 	 * @throws Exception Exception 
 	 * 
 	 */
-	public Mail(String server, String from, String theSujet) throws Exception{
+	public Mail(String server, String user, String password, String from, String replyTo, String theSujet) throws Exception{
 		super();
 		if (server == null) server = SMTPserveur;
 		Properties props = new Properties();
 		
 		//Alim du serveur host
-		props.put("mail.smtp.host", server);		
-//		 fill props with any information
-		Session session = Session.getDefaultInstance(props, null);
+		props.put("mail.smtp.host", server);
+		//Authentification
+		props.put("mail.smtp.auth", true);
+		// fill props with any information
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, password);
+			}
+		});
 
 		//Le mime message
 		message = new MimeMessage(session);
 		message.setContent(multipart);
 
 		message.setFrom(new InternetAddress(from));
+		message.setReplyTo(new InternetAddress[]{new InternetAddress(replyTo)});
 		message.setSubject(theSujet);
 	}
 	
@@ -110,8 +114,8 @@ public class Mail {
 			System.exit(0);
 		}
 						 
-		//Mail aMail = new Mail(Mail.SMTPserveur, "toto@toto.com",  "Mon sujet");
-		Mail aMail = new Mail(Mail.SMTPserveur, args[0],  args[1]);
+		//Mail aMail = new Mail(Mail.SMTPserveur, authUser, authPassword, from, "toto@toto.com",  "Mon sujet");
+		Mail aMail = new Mail(Mail.SMTPserveur, args[0],  args[1],  args[2],  args[3], args[4]);
 		
 		//Ajout des destinataires
 		//aMail.ajouteDestinataireTO("boulu72@ville-noumea.nc");

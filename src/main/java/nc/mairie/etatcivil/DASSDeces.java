@@ -141,12 +141,16 @@ public class DASSDeces {
 		try {
 			
 			//Lecture de l'expediteur et du sujet
-			String expediteur = properties.getProperty("expediteur");
+			String from = properties.getProperty("expediteur");
+			String replyTo = properties.getProperty("replyTo");
 			String sujet = properties.getProperty("sujet");
 			
 			SMTPServer = properties.getProperty("SMTPServer");
+			String username = properties.getProperty("SMTPUsername");
+			String password = properties.getProperty("SMTPPassword");
 
-			Mail aMail = new Mail(SMTPServer, expediteur,  sujet);
+
+			Mail aMail = new Mail(SMTPServer, username, password, from, replyTo,  sujet);
 			
 			String dest=null;
 			StringTokenizer st = null;
@@ -193,7 +197,7 @@ public class DASSDeces {
 			aMail.ajouteFichier(fileECP.getCanonicalPath(), fileECP.getName());
 			
 			aMail.envoyer();
-			afficheMessage("Fin d'envoi du mail de "+expediteur);
+			afficheMessage("Fin d'envoi du mail de "+replyTo);
 
 		} catch (Exception e) {
 			afficheErreur(e.getMessage());
