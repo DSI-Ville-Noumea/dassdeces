@@ -27,7 +27,7 @@
 		<versioneye-maven-plugin.version>3.11.4</versioneye-maven-plugin.version>
    		<versioneye-maven-plugin.apiKey>${env.VERSIONEYE_APIKEY}</versioneye-maven-plugin.apiKey>
   		<versioneye-maven-plugin.projectId>${env.VERSIONEYE_PROJECTID}</versioneye-maven-plugin.projectId>
-  		<maven-compiler-plugin.version>3.6.2</maven-compiler-plugin.version>
+  		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<artifactId>${project.artifactId}</artifactId>
 		<version>${project.version}</version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
