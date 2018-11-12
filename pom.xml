@@ -35,7 +35,7 @@
 		<!--  Bien laisser à java 1.7 car le tomcat de Cityweb est en 1.7 !!! -->
 		<java.version>1.8</java.version>
 		<postgresql.version>42.1.4</postgresql.version>
-		<maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
+		<maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
 		<checksum-maven-plugin.version>1.4</checksum-maven-plugin.version>
 	</properties>
 
